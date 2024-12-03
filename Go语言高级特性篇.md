@@ -1,35 +1,25 @@
 ## 1. Go 语言 context 最佳实践
 
-#### **1. 基本原则**
+### **1. 基本原则**
 
 1. **传递上下文**：当函数需要上下文支持时，尽量将 `context.Context` 作为第一个参数传入，命名为 `ctx`，保持一致性。
 
-   ```
-   go
-   
-   
-   复制代码
+   ```go
    func DoSomething(ctx context.Context) {
        // 使用 ctx
    }
    ```
-
+   
 2. **不存储 `context.Context`**：不要将 `context.Context` 存储到结构体或全局变量中，它是请求范围的临时数据，应在调用链中传递。
 
 3. **避免修改父 `context`**：使用 `WithCancel`、`WithDeadline`、`WithTimeout` 等方法创建派生 `context`，不要直接修改父 `context`。
 
 4. **尽早取消 `context`**：当操作完成或不再需要时，及时调用取消函数，释放资源。
 
-   ```
-   go
-   
-   
-   复制代码
+   ```go
    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
    defer cancel() // 确保取消
    ```
-
-------
 
 ### **2. 使用场景与最佳实践**
 
@@ -66,8 +56,6 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 ```
-
-------
 
 #### **2.2 超时控制**
 
