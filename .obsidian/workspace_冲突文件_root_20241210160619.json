@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "GO底层原理.md",
+                "file": "GO并发编程.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GO底层原理"
+              "title": "GO并发编程"
             }
           }
         ],
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "GO底层原理.md",
+                "file": "GO并发编程.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "GO底层原理 的反向链接列表"
+              "title": "GO并发编程 的反向链接列表"
             }
           },
           {
@@ -127,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "GO底层原理.md",
+                "file": "GO并发编程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "GO底层原理 的出链列表"
+              "title": "GO并发编程 的出链列表"
             }
           },
           {
@@ -154,10 +154,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "GO底层原理.md"
+                "file": "GO并发编程.md"
               },
               "icon": "lucide-list",
-              "title": "GO底层原理 的大纲"
+              "title": "GO并发编程 的大纲"
             }
           }
         ],
@@ -181,15 +181,15 @@
   },
   "active": "1ef0939410eda887",
   "lastOpenFiles": [
-    "GO并发编程.md",
-    "go语言基础.md",
-    "Go语言高级特性篇.md",
-    "GO底层原理.md",
     "Go runtime.md",
-    "html.md",
+    "GO并发编程.md",
+    "GO底层原理.md",
+    "Go语言高级特性篇.md",
     "Go语言基础.md",
-    "javascript.md",
     "Untitled.md",
+    "html.md",
+    "javascript.md",
+    "go语言基础.md",
     "css.md",
     "2024-11-22.md",
     "html 2. **如何使用 HTML5 实现表单验证？**.md"
