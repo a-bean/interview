@@ -1,4 +1,4 @@
-###  1. **事件循环？**
+###   1. **事件循环？**
 - **宏任务队列**（macrotask queue）：ajax、setTimeout、setInterval、DOM监听、UI Rendering等
 - **微任务队列**（microtask queue）：Promise的then回调、 Mutation Observer API、queueMicrotask()等
 #### 浏览器事件循环的过程
@@ -636,7 +636,7 @@ if (flag) {
 - - 也就是说设置了 `type=module` 的代码，相当于在script标签上也加上了 `defer` 属性；
   - 如果我们后面有普通的script标签以及对应的代码，那么ES Module对应的js文件和代码不会阻塞它们的执行；
 
-```
+```html
 <script src="main.js" type="module"></script>
 <!-- 这个js文件的代码不会被阻塞执行 -->
 <script src="index.js"></script>
@@ -654,7 +654,7 @@ if (flag) {
 
 bar.js文件中修改
 
-```
+```js
 let name = 'coderwhy';
 
 setTimeout(() => {
@@ -672,7 +672,7 @@ export {
 
 main.js文件中获取
 
-```
+```js
 import { name } from './modules/bar.js';
 
 console.log(name);
@@ -685,7 +685,7 @@ setTimeout(() => {
 
 但是，下面的代码是不成立的：main.js中修改
 
-```
+```js
 import { name } from './modules/bar.js';
 
 console.log(name);
@@ -1036,12 +1036,8 @@ Person.prototype.constructor  // Person
 
 使用后`hasOwnProperty()`方法来判断属性是否属于原型链的属性：
 
-```scss
-scss
-
- 代码解读
-复制代码javascript
-复制代码function iterate(obj){
+```js
+function iterate(obj){
    var res=[];
    for(var key in obj){
         if(obj.hasOwnProperty(key))

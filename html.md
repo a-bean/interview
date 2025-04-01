@@ -143,10 +143,40 @@
 
 - `<meta>` 标签用于定义文档的元数据。常见的属性有：
     - `charset`：定义字符集，如 `UTF-8`。
-	- `viewport`：控制视口的大小和缩放比例，常用于响应式设计。
+	
+    - `viewport`：控制视口的大小和缩放比例，常用于响应式设计。
+    
     - `description`：为页面提供简短的描述，通常用于搜索引擎优化 (SEO)。
+    
     - `keywords`：定义页面关键词，用于 SEO（尽管现代搜索引擎不再高度依赖这个标签）。
+    
     - `robots`：控制搜索引擎抓取行为，如 `index`, `noindex`, `follow`, `nofollow`。
+    
+      **作用**
+    
+      1. 控制页面是否被索引
+         通过meta robots，你可以告诉搜索引擎是否将页面内容纳入其索引库。例如，阻止某些页面（如隐私页面或临时页面）被搜索引擎收录。
+      2. 控制链接是否被跟踪
+         可以指定爬虫是否跟随页面上的链接（即爬取链接指向的其他页面）。
+      3. 优化SEO
+         通过合理设置，帮助搜索引擎更好地理解网站结构，避免重复内容被索引，或者防止低质量页面影响网站排名。
+    
+      **常用指令**
+    
+      meta robots标签的基本格式如下：
+    
+      ```html
+      <meta name="robots" content="指令">
+      ```
+    
+      常见的content值包括：（1. 大小写不敏感  2. 多个指令组合用逗号分隔多个指令）
+    
+      - index: 允许搜索引擎索引该页面（默认行为）。
+      - noindex: 禁止搜索引擎索引该页面，页面不会出现在搜索结果中。
+      - follow: 允许搜索引擎跟踪页面上的链接（默认行为）。
+      - nofollow: 禁止搜索引擎跟踪页面上的链接。
+      - noarchive: 禁止搜索引擎缓存页面内容（即搜索结果中不显示“网页快照”）。
+      - nosnippet: 禁止搜索引擎在搜索结果中显示页面的摘要。
 ### 4. **如何优化页面加载速度？**
 
 - **减少 HTTP 请求**：合并 CSS、JavaScript 文件，使用图像 Sprites。
@@ -273,7 +303,11 @@
 
 - 在 `<a>` 标签中使用 `target="_blank"` 会在新窗口中打开链接，但这可能会带来安全风险，因为新页面可以通过 `window.opener` 获取对原页面的引用并执行恶意操作。
 
-- 使用 `rel="noopener noreferrer"` 可以防止这种行为：
+- 防止这种行为：(两种方式)
+
+  ```js
+  window.open(url, '_blank', 'noopener');
+  ```
 
   ```html
   <a href="https://www.example.com" target="_blank" rel="noopener noreferrer">Example</a>
@@ -283,6 +317,67 @@
 
   - `noopener`：防止新窗口获取对原窗口的控制。
   - `noreferrer`：不发送 `Referer` 头信息。
+
+  **扩展**
+
+  window.opener 是 JavaScript 中的一个全局属性，用于引用打开当前窗口的父窗口。它通常在新窗口（通过 window.open() 方法打开）中起作用，帮助新窗口与原始窗口进行交互。
+
+  **window.opener 主要用于以下场景：**
+
+  1. 跨窗口通信  
+     - 新窗口可以通过 window.opener 调用父窗口的函数、访问其全局变量或修改其 DOM。
+     - 父窗口也可以通过返回的窗口引用（如 newWindow）操作新窗口。
+  2. 数据传递  ：在新窗口和父窗口之间传递数据，例如表单提交结果。
+  3. 关闭新窗口后通知父窗口  ：新窗口可以在关闭前通过 window.opener 通知父窗口刷新或执行某些操作。
+
+  **注意事项**
+
+  (1) 跨域限制
+
+  - 如果父窗口和新窗口的域名不同（违反同源策略），window.opener 的访问会受到限制。
+
+  - 可以通过 postMessage API 实现跨域通信：
+
+    ```javascript
+    // 子窗口
+    window.opener.postMessage('消息', 'https://parent-domain.com');
+    
+    // 父窗口
+    window.addEventListener('message', (event) => {
+      if (event.origin === 'https://child-domain.com') {
+        console.log(event.data);
+      }
+    });
+    ```
+
+  (2) 安全性问题
+
+  - 恶意操作: 如果新窗口是不可信的第三方页面，它可能通过 window.opener 修改父窗口的内容。
+
+  - 防护措施: 
+
+    - 在父窗口中设置 rel="noopener"，阻止新窗口获取 window.opener：
+
+      ```html
+      <a href="https://example.com" target="_blank" rel="noopener">打开链接</a>
+      ```
+
+    - 使用 window.open() 时添加 noopener 参数
+
+      ```javascript
+      window.open('https://example.com', '_blank', 'noopener');
+      ```
+
+    - 这会使新窗口的 window.opener 为 null，增强安全性。
+
+  (3) 浏览器行为
+
+  - 某些浏览器可能限制 window.close()（仅允许关闭通过脚本打开的窗口）。
+  - 如果用户手动打开新标签页，window.opener 始终为 null。
+
+  (4) 现代替代方案
+
+  - 对于复杂的跨窗口交互，推荐使用 postMessage 或 Web Storage（如 localStorage）替代直接操作 window.opener，因为它们更安全且跨域支持更好。
 
 ### 14. **什么是 Progressive Web App (PWA)，它的 HTML 实现方式是什么？**
 
@@ -322,7 +417,6 @@
   </video>
   ```
 
-  
 
 ### 17. **`<progress>` 和 `<meter>` 标签的区别是什么？**
 
@@ -362,7 +456,6 @@
   <button accesskey="s">保存</button>
   ```
 
-  
 
 ### 20. **如何防止表单中的 CSRF（跨站请求伪造）攻击？**
 
